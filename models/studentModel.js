@@ -37,7 +37,7 @@ studentModels.methods.comparePassword = function (password) {
 };
 
 studentModels.methods.getjwttoken = function () {
-  return jwt.sign({ id: this_id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 };

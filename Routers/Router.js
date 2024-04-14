@@ -5,9 +5,10 @@ const { homepage,
         studentSignup,
         studentSignin,
         studentSignout, } = require("../controllers/controllers");
+const { isAuthenticated } = require("../middlewares/auth");
 
 // just / page
-router.get("/",homepage)
+router.get("/", isAuthenticated,homepage)
 
 //POST student/signup
 router.post("/student/signup",studentSignup)

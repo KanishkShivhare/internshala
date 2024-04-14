@@ -11,7 +11,7 @@ exports.homepage = catchAsyncError(async (req, res, next) => {
 exports.studentSignup = catchAsyncError(async (req, res, next) => {
   const studentuser = await studentModels(req.body).save();
   res.status(201).json(studentuser);
-  // sendToken(studentuser, 201, res);
+  sendToken(studentuser, 201, res);
 });
 
 //studentSignin
@@ -34,9 +34,12 @@ exports.studentSignin = catchAsyncError(async (req, res, next) => {
         401
       )
     );
-    res.json(studentuser)
-  // sendToken(studentuser, 200, res);
+  // res.json(studentuser)
+  sendToken(studentuser, 200, res);
 });
 
-//studentSignout
-exports.studentSignout = catchAsyncError(async (req, res, next) => {});
+// studentSignout
+exports.studentSignout = catchAsyncError(async (req, res, next) => {
+  res.clearCookie("token");
+  res.json({ message: "Successfully SignOut!" });
+});
