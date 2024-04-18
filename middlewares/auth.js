@@ -4,6 +4,16 @@ const { catchAsyncError } = require("./catchAsyncError");
 
 exports.isAuthenticated = catchAsyncError(async (req, res, next) => {
   const { token } = req.cookies;
-  
-  res.json(token);
+
+  if (!token) {
+    return next (
+        new ErrorHandler("please login to access the resource",401)
+    )  
+  }
+
+  const {id} = jwt.verify(token, process.env.JWT_SECRET);
+  req.id = id;
+
+  // res.json({id ,token});  
+  next()  
 });

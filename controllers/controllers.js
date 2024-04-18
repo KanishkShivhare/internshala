@@ -7,6 +7,12 @@ exports.homepage = catchAsyncError(async (req, res, next) => {
   res.json({ message: "homepage" });
 });
 
+// currentuser
+exports.currentuser = catchAsyncError(async (req, res, next) => {
+  const studentuser = await studentModels.findById(req.id).exec();
+  res.json({ studentuser });
+});
+
 //studentSignup
 exports.studentSignup = catchAsyncError(async (req, res, next) => {
   const studentuser = await studentModels(req.body).save();
@@ -42,4 +48,21 @@ exports.studentSignin = catchAsyncError(async (req, res, next) => {
 exports.studentSignout = catchAsyncError(async (req, res, next) => {
   res.clearCookie("token");
   res.json({ message: "Successfully SignOut!" });
+});
+
+exports.studentSendmail = catchAsyncError(async (req, res, next) => {
+  const studentuser = await studentModels
+    .findOne({ email: req.body.email })
+    .exec();
+  if (!studentuser)
+    return next(
+      new ErrorHandler("Student User Not Found With This Email Address", 401)
+    );
+  const url = `${req.protocol}://${req.get("host")}/student/forget-link/${
+    studentuser._id
+  }`;
+
+  sendmail(req, res, next, url);
+
+  res.json({ studentuser, url });
 });
