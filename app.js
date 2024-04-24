@@ -25,8 +25,13 @@ app.use(
 );
 app.use(cookieParser());
 
-//initail routes
-app.use("/", require("./Routers/Router"));
+//express file-upload
+const fileupload = require("express-fileupload");
+app.use(fileupload());
+
+//routes
+app.use("/user", require("./Routers/indexRouter"));
+app.use("/resume", require("./Routers/resumeRouter"));
 
 // ErrorHandler
 const ErrorHandler = require("./utils/ErrorHandler");
