@@ -1,5 +1,5 @@
-exports.sendToken = (studentuser, statuscode, res) => {
-  const token = studentuser.getjwttoken();
+exports.sendToken = (employeuser, statuscode, res) => {
+  const token = employeuser.getjwttoken();
 
   const options = {
     exipres: new Date(
@@ -10,5 +10,5 @@ exports.sendToken = (studentuser, statuscode, res) => {
   res
     .status(statuscode)
     .cookie("token", token, options)
-    .json({ success: true, id: studentuser._id, token });
+    .json({ success: true, id: employeuser._id, token });
 };

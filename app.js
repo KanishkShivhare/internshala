@@ -32,6 +32,7 @@ app.use(fileupload());
 //routes
 app.use("/user", require("./Routers/indexRouter"));
 app.use("/resume", require("./Routers/resumeRouter"));
+app.use("/employe", require("./Routers/employeRouter"));
 
 // ErrorHandler
 const ErrorHandler = require("./utils/ErrorHandler");
